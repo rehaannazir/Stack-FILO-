@@ -57,7 +57,7 @@ void Stack<T>::push(const T &n)
 template <typename T>
 T Stack<T>::pop()
 {
-    if (!is_empty)
+    if (!is_empty())
     {
         T popped_num = data[top];
         top--;

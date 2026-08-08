@@ -43,7 +43,7 @@ bool Stack<T>::is_full()
 }
 
 template <typename T>
-void Stack<T>::push(int n)
+void Stack<T>::push(const T &n)
 {
     if (!is_full())
     {

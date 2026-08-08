@@ -12,7 +12,7 @@ class Stack
 public:
     Stack(int);
     Stack(const Stack &);
-    void push(int);
+    void push(const T &);
     T pop();
     bool is_empty();
     bool is_full();

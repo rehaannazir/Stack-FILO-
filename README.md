@@ -35,7 +35,7 @@ Internally the container is a heap-allocated array `T* data`, with `capacity` fi
 | **Copy constructor** | `Stack(const Stack&)` | Deep copy — allocates its own buffer |
 | **Assignment** | `operator=(const Stack&)` | Self-assignment guarded, frees old buffer, deep copies |
 | **Destructor** | `~Stack()` | Releases the array with `delete[]` |
-| `push` | `void push(int)` | Adds an element when space remains |
+| `push` | `void push(const T&)` | Adds an element when space remains |
 | `pop` | `T pop()` | Removes and returns the top element |
 | `stack_top` | `T stack_top()` | Reads the top element without removing it |
 | `is_empty` | `bool is_empty()` | True when `top == 0` |
@@ -75,37 +75,44 @@ Stack<int> s(5);   // holds at most 5 elements
 
 ---
 
-## Using it
-
-The class template is declared in `stack.h` with its definitions in `stack.cpp`. Because templates are instantiated at compile time, the definitions must be visible to the translation unit that uses them — either include the implementation directly:
-
-```cpp
-#include "stack.h"
-#include "stack.cpp"
-
-int main() {
-    Stack<int> s(5);
-    s.push(10);
-    s.push(20);
-    return 0;
-}
-```
-
-…or add explicit instantiations at the bottom of `stack.cpp` for each type you need:
-
-```cpp
-template class Stack<int>;
-template class Stack<double>;
-```
-
-Compile:
+## Build & Run
 
 ```bash
 git clone https://github.com/rehaannazir/Stack-FILO-.git
 cd Stack-FILO-
 
 g++ main.cpp -o stack
-./stack
+./stack          # Windows: stack.exe
+```
+
+Expected output:
+
+```
+size      : 3
+top       : 30
+pop       : 30
+pop       : 20
+size now  : 1
+is_empty  : false
+word top  : world
+word pop  : world
+copy top  : hello
+```
+
+### A note on template linkage
+
+The class template is declared in `stack.h` with its definitions in `stack.cpp`. Because templates are instantiated at compile time, those definitions must be visible to whichever translation unit uses them — which is why `main.cpp` includes both:
+
+```cpp
+#include "stack.h"
+#include "stack.cpp"
+```
+
+The alternative is adding explicit instantiations at the bottom of `stack.cpp` for each type you need:
+
+```cpp
+template class Stack<int>;
+template class Stack<std::string>;
 ```
 
 ---
@@ -116,6 +123,7 @@ g++ main.cpp -o stack
 |---|---|
 | `stack.h` | Class template declaration with include guard |
 | `stack.cpp` | Member definitions, each prefixed with `template <typename T>` |
+| `main.cpp` | Runnable demo covering push/pop, `Stack<string>`, and deep copy |
 
 ---
 

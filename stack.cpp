@@ -59,9 +59,8 @@ T Stack<T>::pop()
 {
     if (!is_empty())
     {
-        T popped_num = data[top];
         top--;
-        return popped_num;
+        return data[top];
     }
     else
         exit(0);
